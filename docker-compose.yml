@@ -1,0 +1,21 @@
+services:
+  go-app:
+    build:
+      context: ./backend/go-basic-poc
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/go-basic-poc:/app # Mount the Go app directory
+    command: go run cmd/main.go # Run the Go application
+
+  nest-app:
+    build:
+      context: ./backend/nest-basic-poc
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/nest-basic-poc:/app # Mount the NestJS app directory
+      - /app/node_modules # prevent overwriting node_modules in container.
+    command: npm run start:dev # Run the NestJS dev server
